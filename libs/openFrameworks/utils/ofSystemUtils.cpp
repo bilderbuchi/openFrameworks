@@ -278,7 +278,7 @@ CantRunDialog:
 	NavDialogDispose(dialog);
 CantCreateDialog:
 CantGetNavOptions:
-    return fileAsCFURLRef;
+      return fileAsCFURLRef;
 }
 #endif
 //----------------------------------------------------------------------------------------
