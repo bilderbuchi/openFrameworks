@@ -7,7 +7,7 @@ void testApp::setup(){
     
 	ofSetFrameRate(60); // we set the frameRate slower, so that we see the movement of the lines better
 	
-	ofEnableAlphaBlending(); // this is necessary so that the colors can have alpha values
+	ofEnableAlphaBlending();    // this is necessary so that the colors can have alpha values
 	
 	// one way to define the fbo: setting the width (400), the height (200) and the internal format like this
 	/*
