@@ -8,5 +8,5 @@
 # * Make sure the script can meaningfully be called locally, too.
       
 echo "Styling touched files with OF code style"
-echo "Not yet implemented, still a no-op."
+echo "Not yet implemented, still a no-op.sdsd"
 exit 0
