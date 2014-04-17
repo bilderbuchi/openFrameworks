@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Any command line arguments are passed as options to Make!
+
 export LC_ALL=C
 
 ARCH=$(uname -m)
@@ -13,7 +15,7 @@ WHO=`who am i`;ID=`echo ${WHO%% *}`
 GROUP_ID=`id --group -n ${ID}`
 
 cd ../../libs/openFrameworksCompiled/project
-make Debug
+make "$@" Debug
 exit_code=$?
 if [ $exit_code != 0 ]; then
   echo "there has been a problem compiling Debug OF library"
@@ -22,7 +24,7 @@ if [ $exit_code != 0 ]; then
   exit $exit_code
 fi
 
-make Release
+make "$@" Release
 exit_code=$?
 if [ $exit_code != 0 ]; then
   echo "there has been a problem compiling Release OF library"

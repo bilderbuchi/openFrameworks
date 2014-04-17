@@ -1,12 +1,14 @@
 #!/bin/bash
 
+# Any command line arguments are passed as options to Make!
+
 export LC_ALL=C
 
 WHO=`who am i`;ID=`echo ${WHO%% *}`
 GROUP_ID=`id --group -n ${ID}`
 
 cd ../../apps/projectGenerator/projectGeneratorSimple
-make Release
+make "$@" Release
 ret=$?
 if [ $ret -ne 0 ]; then
   echo "there has been a problem compiling the projectGenerator"
