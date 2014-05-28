@@ -81,8 +81,10 @@ static void initGTK(){
 	if(!initialized){
 		ofGstUtils::startGstMainLoop();
 	    gdk_threads_init();
-	int argc=0; char **argv = NULL;
-	gtk_init (&argc, &argv);
+		gdk_threads_enter();
+		int argc=0; char **argv = NULL;
+		gtk_init (&argc, &argv);
+		gdk_threads_leave();
 		initialized = true;
 	}
 
@@ -108,6 +110,7 @@ static string gtkFileDialog(GtkFileChooserAction action,string windowTitle,strin
 		break;
 	}
 
+	gdk_threads_enter();
 	GtkWidget *dialog = gtk_file_chooser_dialog_new (windowTitle.c_str(),
 						  NULL,
 						  action,
@@ -117,14 +120,11 @@ static string gtkFileDialog(GtkFileChooserAction action,string windowTitle,strin
 
 	gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),defaultName.c_str());
 
-	gdk_threads_enter();
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
 		results = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 	}
 	gtk_widget_destroy (dialog);
 	gdk_threads_leave();
-	//gtk_dialog_run(GTK_DIALOG(dialog));
-	//startGTK(dialog);
 	return results;
 }
 
@@ -185,9 +185,9 @@ void ofSystemAlertDialog(string errorMessage){
 
 	#if defined( TARGET_LINUX ) && defined (OF_USING_GTK)
 		initGTK();
+		gdk_threads_enter();
 		GtkWidget* dialog = gtk_message_dialog_new (NULL, (GtkDialogFlags) 0, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", errorMessage.c_str());
 
-		gdk_threads_enter();
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
 		gdk_threads_leave();
@@ -492,12 +492,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 string ofSystemTextBoxDialog(string question, string text){
 #if defined( TARGET_LINUX ) && defined (OF_USING_GTK)
 	initGTK();
+	gdk_threads_enter();
 	GtkWidget* dialog = gtk_message_dialog_new (NULL, (GtkDialogFlags) 0, GTK_MESSAGE_QUESTION, (GtkButtonsType) GTK_BUTTONS_OK_CANCEL, "%s", question.c_str() );
 	GtkWidget* content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 	GtkWidget* textbox = gtk_entry_new();
 	gtk_entry_set_text(GTK_ENTRY(textbox),text.c_str());
 	gtk_container_add (GTK_CONTAINER (content_area), textbox);
-	gdk_threads_enter();
 	gtk_widget_show_all (dialog);
 	if(gtk_dialog_run (GTK_DIALOG (dialog))==GTK_RESPONSE_OK){
 		text = gtk_entry_get_text(GTK_ENTRY(textbox));
