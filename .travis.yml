@@ -1,7 +1,9 @@
-
-language: objective-c
-compiler: clang
-node_js: '0.10'
+os:
+#  - linux
+  - osx
+# language: objective-c
+# compiler: clang
+# node_js: '0.10'
 env:
   global:
     - secure: kjz286d6rs2VHpv4WnxAOYXcdTIaTaABZ0SNXf27r5H+NDu5qx8ZSeCmj/9op/sDjTtpkLKhi2a0njUCWwak28RAWP3dNkT92MkUPVKBkevznSxWeqwLHoUos3AJnhPMB+cwrWvmRC+Ljt5K1q8SxQsS/HXM9pzKL3DG3qxM+eo=
@@ -9,14 +11,14 @@ env:
     - NAME="osx" \
         SCRIPT_PATH="scripts/$NAME" \
         SCRIPT="$SCRIPT_PATH/testTemplate.sh"
-    - NAME="ios" \ 
+    - NAME="ios" \
         SCRIPT_PATH="scripts/$NAME" \
         SCRIPT="$SCRIPT_PATH/testTemplate.sh"
-    - NAME="android-armv7" \ 
+    - NAME="android-armv7" \
         SCRIPT_PATH="scripts/android" \
         OF_ROOT="$PWD" \
         SCRIPT="$SCRIPT_PATH/testTemplate.sh armv7"
-    - NAME="android-x86" \ 
+    - NAME="android-x86" \
         SCRIPT_PATH="scripts/android" \
         OF_ROOT="$PWD" \
         SCRIPT="$SCRIPT_PATH/testTemplate.sh x86"
