@@ -2,7 +2,8 @@ os:
   - linux
 #  - osx
 # language: objective-c
-compiler: gcc
+language: cpp
+# compiler: gcc
 # node_js: '0.10'
 env:
   global:
@@ -27,15 +28,17 @@ env:
         SCRIPT="$SCRIPT_PATH/documentation.sh"
 matrix:
   include:
+    # fully specify builds, apparenly include can't dynamically expand matrix entries
     - os: osx
       compiler: clang
-      env:     
-        - NAME="osx" \
+      env: NAME="osx" \
+          SCRIPT_PATH="scripts/$NAME" \
+          SCRIPT="$SCRIPT_PATH/testTemplate.sh"    
+    - os: osx
+      compiler: clang
+      env: NAME="ios" \
           SCRIPT_PATH="scripts/$NAME" \
           SCRIPT="$SCRIPT_PATH/testTemplate.sh"
-        - NAME="ios" \
-            SCRIPT_PATH="scripts/$NAME" \
-            SCRIPT="$SCRIPT_PATH/testTemplate.sh"
 
 before_install:
     "if [ \"$NAME\" == \"docs\" ]; then scripts/dev/documentation.sh before_install; fi"
