@@ -9,12 +9,9 @@ env:
   global:
     - secure: kjz286d6rs2VHpv4WnxAOYXcdTIaTaABZ0SNXf27r5H+NDu5qx8ZSeCmj/9op/sDjTtpkLKhi2a0njUCWwak28RAWP3dNkT92MkUPVKBkevznSxWeqwLHoUos3AJnhPMB+cwrWvmRC+Ljt5K1q8SxQsS/HXM9pzKL3DG3qxM+eo=
   matrix:
-#    - NAME="osx" \
-#        SCRIPT_PATH="scripts/$NAME" \
-#        SCRIPT="$SCRIPT_PATH/testTemplate.sh"
-#    - NAME="ios" \
-#        SCRIPT_PATH="scripts/$NAME" \
-#        SCRIPT="$SCRIPT_PATH/testTemplate.sh"
+    - NAME="linux" \
+        OF_ROOT="$PWD" \
+        SCRIPT="scripts/linux/testTemplate.sh"
     - NAME="android-armv7" \
         SCRIPT_PATH="scripts/android" \
         OF_ROOT="$PWD" \
@@ -41,7 +38,11 @@ matrix:
           SCRIPT="$SCRIPT_PATH/testTemplate.sh"
 
 before_install:
-    "if [ \"$NAME\" == \"docs\" ]; then scripts/dev/documentation.sh before_install; fi"
+    - "if [ \"$NAME\" == \"docs\" ]; then scripts/dev/documentation.sh before_install; fi"
+    - if [ "$NAME" == "linux" ]; then
+        sudo scripts/linux/ubuntu/install_dependencies.sh
+        export CXX=g++-4.9
+      fi
 install:
     "if [ \"$NAME\" == \"android-armv7\" ] || [ \"$NAME\" == \"android-x86\" ]; then scripts/android/install_tests_env.sh; fi"
 script:
@@ -50,3 +51,5 @@ after_success:
     "if [ \"$NAME\" == \"docs\" ]; then scripts/dev/documentation.sh after_success; fi"
 git:
     depth: 10
+#notifications:
+#    webhooks: http://192.237.185.151/web-hooks/travis_done.cgi
