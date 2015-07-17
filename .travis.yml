@@ -31,6 +31,7 @@ matrix:
 
 before_install:
     - OF_ROOT="$PWD"
+    - echo "$OF_ROOT"
     - if [ "$TARGET" == "docs" ]; then scripts/dev/documentation.sh before_install; fi
     - if [ "$TARGET" == "linux" ]; then 
         sudo scripts/linux/ubuntu/install_dependencies.sh;
@@ -39,7 +40,8 @@ before_install:
 install:
     if [ "$TARGET" == "android-armv7" ] || [ "$TARGET" == "android-x86" ]; then scripts/android/install_tests_env.sh; fi
 script:
-    "$SCRIPT"
+    - echo "$OF_ROOT"
+    - "$SCRIPT"
 after_success:
     if [ "$TARGET" == "docs" ]; then scripts/dev/documentation.sh after_success; fi
 git:
