@@ -30,7 +30,7 @@ matrix:
           SCRIPT="scripts/$TARGET/testTemplate.sh"
 
 before_install:
-    - OF_ROOT="$PWD"
+    - export OF_ROOT="$PWD"
     - echo "$OF_ROOT"
     - if [ "$TARGET" == "docs" ]; then scripts/dev/documentation.sh before_install; fi
     - if [ "$TARGET" == "linux" ]; then 
