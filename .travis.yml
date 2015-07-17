@@ -38,17 +38,17 @@ matrix:
           SCRIPT="$SCRIPT_PATH/testTemplate.sh"
 
 before_install:
-    - "if [ \"$NAME\" == \"docs\" ]; then scripts/dev/documentation.sh before_install; fi"
+    - if [ "$NAME" == "docs" ]; then scripts/dev/documentation.sh before_install; fi
     - if [ "$NAME" == "linux" ]; then 
         sudo scripts/linux/ubuntu/install_dependencies.sh;
         export CXX=g++-4.9;
       fi
 install:
-    "if [ \"$NAME\" == \"android-armv7\" ] || [ \"$NAME\" == \"android-x86\" ]; then scripts/android/install_tests_env.sh; fi"
+    if [ "$NAME" == "android-armv7" ] || [ "$NAME" == "android-x86" ]; then scripts/android/install_tests_env.sh; fi
 script:
-    "$SCRIPT"
+    $SCRIPT
 after_success:
-    "if [ \"$NAME\" == \"docs\" ]; then scripts/dev/documentation.sh after_success; fi"
+    if [ "$NAME" == "docs" ]; then scripts/dev/documentation.sh after_success; fi
 git:
     depth: 10
 #notifications:
