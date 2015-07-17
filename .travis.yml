@@ -30,7 +30,7 @@ matrix:
           SCRIPT="scripts/$TARGET/testTemplate.sh"
 
 before_install:
-    - OF_ROOT="$TRAVIS_BUILD_DIR"
+    - OF_ROOT="$PWD"
     - if [ "$TARGET" == "docs" ]; then scripts/dev/documentation.sh before_install; fi
     - if [ "$TARGET" == "linux" ]; then 
         sudo scripts/linux/ubuntu/install_dependencies.sh;
