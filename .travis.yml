@@ -10,34 +10,27 @@ env:
     - secure: kjz286d6rs2VHpv4WnxAOYXcdTIaTaABZ0SNXf27r5H+NDu5qx8ZSeCmj/9op/sDjTtpkLKhi2a0njUCWwak28RAWP3dNkT92MkUPVKBkevznSxWeqwLHoUos3AJnhPMB+cwrWvmRC+Ljt5K1q8SxQsS/HXM9pzKL3DG3qxM+eo=
   matrix:
     - TARGET="linux" \
-        OF_ROOT="$PWD" \
         SCRIPT="scripts/linux/testTemplate.sh"
     - TARGET="android-armv7" \
-        SCRIPT_PATH="scripts/android" \
-        OF_ROOT="$PWD" \
-        SCRIPT="$SCRIPT_PATH/testTemplate.sh armv7"
+        SCRIPT="scripts/android/testTemplate.sh armv7"
     - TARGET="android-x86" \
-        SCRIPT_PATH="scripts/android" \
-        OF_ROOT="$PWD" \
-        SCRIPT="$SCRIPT_PATH/testTemplate.sh x86"
+        SCRIPT="scripts/android/testTemplate.sh x86"
     - TARGET="docs" \
-        SCRIPT_PATH="scripts/dev" \
-        SCRIPT="$SCRIPT_PATH/documentation.sh"
+        SCRIPT="scripts/dev/documentation.sh"
 matrix:
   include:
     # fully specify builds, apparenly include can't dynamically expand matrix entries
     - os: osx
       compiler: clang
       env: TARGET="osx" \
-          SCRIPT_PATH="scripts/$TARGET" \
-          SCRIPT="$SCRIPT_PATH/testTemplate.sh"    
+          SCRIPT="scripts/$TARGET/testTemplate.sh"    
     - os: osx
       compiler: clang
       env: TARGET="ios" \
-          SCRIPT_PATH="scripts/$TARGET" \
-          SCRIPT="$SCRIPT_PATH/testTemplate.sh"
+          SCRIPT="scripts/$TARGET/testTemplate.sh"
 
 before_install:
+    - OF_ROOT="$TRAVIS_BUILD_DIR"
     - if [ "$TARGET" == "docs" ]; then scripts/dev/documentation.sh before_install; fi
     - if [ "$TARGET" == "linux" ]; then 
         sudo scripts/linux/ubuntu/install_dependencies.sh;
@@ -46,7 +39,7 @@ before_install:
 install:
     if [ "$TARGET" == "android-armv7" ] || [ "$TARGET" == "android-x86" ]; then scripts/android/install_tests_env.sh; fi
 script:
-    $SCRIPT
+    "$SCRIPT"
 after_success:
     if [ "$TARGET" == "docs" ]; then scripts/dev/documentation.sh after_success; fi
 git:
