@@ -7,10 +7,11 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
     if [ "$1" == "before_install" ]; then
         if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then 
             echo "Documentation Before Install"
-            brew update 
-            brew install Caskroom/cask/libreoffice;
-            brew install doxygen;
-            brew install ncftp;
+            sudo apt-get update;
+            sudo apt-get install python-software-properties;
+            #sudo apt-add-repository -y ppa:libreoffice/libreoffice-4-2;
+            sudo apt-get install doxygen;
+            sudo apt-get install ncftp;
             gem install sass --version "=3.2.12";
             gem install compass --version "=0.12.2";
         fi
