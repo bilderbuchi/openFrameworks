@@ -23,7 +23,7 @@ matrix:
     - os: osx
       compiler: clang
       env: TARGET="osx" \
-          SCRIPT="scripts/$TARGET/testTemplate.sh"    
+          SCRIPT="scripts/$TARGET/testTemplate.sh"
     - os: osx
       compiler: clang
       env: TARGET="ios" \
@@ -33,7 +33,7 @@ before_install:
     - export OF_ROOT="$PWD"
     - echo "$OF_ROOT"
     - if [ "$TARGET" == "docs" ]; then scripts/dev/documentation.sh before_install; fi
-    - if [ "$TARGET" == "linux" ]; then 
+    - if [ "$TARGET" == "linux" ]; then
         sudo scripts/linux/ubuntu/install_dependencies.sh;
         export CXX=g++-4.9;
       fi
