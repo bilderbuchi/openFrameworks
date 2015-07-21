@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-if [ "$SCRIPT_PATH" == "" ]; then SCRIPT_PATH="."; fi
+if [ "$SCRIPT" == "" ]; then SCRIPT_PATH="."; else SCRIPT_PATH=`dirname $SCRIPT`; fi
 echo "Looking for OSX Template Project"
 if [ ! -d $SCRIPT_PATH/template/bin/emptyExample.app ]; then
     echo "---------------------------------"
